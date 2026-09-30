@@ -1,11 +1,4 @@
-"""
-Порівняння стратегій чанкінгу.
 
-Запуск:
-    python -m src.inspect_chunks
-    python -m src.inspect_chunks --strategy fixed --show 3
-    python -m src.inspect_chunks --find d_model
-"""
 
 import argparse
 import statistics
