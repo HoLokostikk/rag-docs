@@ -12,6 +12,12 @@ class Chunk:
     def char_len(self) -> int:
         return len(self.text)
 
+def clean_text(text: str) -> str:
+    text = re.sub(r"</?[a-z]+>", " ", text)
+    text = re.sub(r"~~|__|\*\*|\*", "", text)
+    text = re.sub(r"_([A-Za-z0-9]+)_", r"\1", text)
+    text = re.sub(r"[ \t]+", " ", text)
+    return text.strip()
 
 def fixed_size(text : str, source : str, size : int = 800, overlap : int = 100) -> list[Chunk]:
     chunks = []

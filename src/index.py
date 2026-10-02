@@ -7,7 +7,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 from sentence_transformers import SentenceTransformer
 
-from src.chunking import STRATEGIES, is_noise
+from src.chunking import STRATEGIES, is_noise, clean_text
 
 
 PROCESSED_DIR = Path("data/processed")
@@ -29,7 +29,8 @@ def load_chunks(strategy : str) -> list:
                 if c.char_len >= MIN_CHUNK_CHARS and not is_noise(c)]
         dropped_short = sum(1 for c in chunks if c.char_len < MIN_CHUNK_CHARS)
         dropped_noise = sum(1 for c in chunks if is_noise(c))
-
+        for c in kept:
+            c.text = clean_text(c.text)
         print(f"{path.stem:12s} {len(kept):4d} chunks "
               f"(-{dropped_short} short, -{dropped_noise} noise)")
         all_chunks.extend(kept)

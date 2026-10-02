@@ -4,3 +4,6 @@ __pycache__/
 qdrant_storage/
 EXPERIMENTS.md
 data/
+src/test.py
+src/check_db.py
+src/bench_rerank.py
