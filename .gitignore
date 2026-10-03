@@ -7,3 +7,5 @@ data/
 src/test.py
 src/check_db.py
 src/bench_rerank.py
+datasets/
+src/show_chunk.py
