@@ -1,0 +1,133 @@
+
+- id: attention_heads_base
+  query: "how many attention heads does the base Transformer use"
+  relevant:
+    - {source: attention, index: 14}
+  ground_truth: "The base Transformer model uses 8 parallel attention heads."
+  note: "section 3.2.2: 'we employ h = 8 parallel attention layers'"
+
+- id: why_scale_dot_products
+  query: "why are the dot products scaled before softmax"
+  relevant:
+    - {source: attention, index: 12}
+  ground_truth: >
+    For large values of dk the dot products grow large in magnitude, pushing the
+    softmax function into regions where it has extremely small gradients.
+    Scaling by 1/sqrt(dk) counteracts this effect.
+
+- id: d_model_base
+  query: "what is the model dimension in the base configuration"
+  relevant:
+    - {source: attention, index: 16}
+    - {source: attention, index: 30}
+  ground_truth: "The base configuration uses a model dimension (d_model) of 512."
+
+- id: attention_function
+  query: "how is the attention function defined"
+  relevant:
+    - {source: attention, index: 10}
+  ground_truth: >
+    An attention function maps a query and a set of key-value pairs to an output,
+    where the query, keys, values and output are all vectors, and the output is
+    computed as a weighted sum of the values.
+
+- id: lora_idea
+  query: "what is the general idea of lora"
+  relevant:
+    - {source: lora, index: 1}
+    - {source: lora, index: 2}
+  ground_truth: >
+    LoRA freezes the pretrained model weights and injects trainable rank
+    decomposition matrices into each layer of the Transformer architecture,
+    greatly reducing the number of trainable parameters for downstream tasks.
+
+- id: bert_definition
+  query: "what is BERT"
+  relevant:
+    - {source: bert, index: 1}
+  ground_truth: >
+    BERT is designed to pretrain deep bidirectional representations from
+    unlabeled text by jointly conditioning on both left and right context
+    in all layers.
+
+- id: adaptation_approach
+  query: "what is the most common approach for adaptation"
+  relevant:
+    - {source: lora, index: 19}
+  ground_truth: >
+    Fine-tuning is the most common approach for adaptation: the model is
+    initialized to the pretrained weights and all model parameters undergo
+    gradient updates.
+
+- id: decoder_composition
+  query: "what is the number of layers in the decoder"
+  relevant:
+    - {source: attention, index: 9}
+  ground_truth: "The decoder is composed of a stack of 6 identical layers."
+
+- id: separable_convolution_complexity
+  query: "what is the complexity of a separable convolution"
+  relevant:
+    - {source: attention, index: 21}
+  ground_truth: >
+    Even with k = n, the complexity of a separable convolution is equal to the
+        combination of a self-attention layer and a point-wise feed-forward layer,
+        which is the approach taken in the Transformer.
+
+- id: adapt_without_full_finetuning
+  query: "how can a large model be adapted to a new task without changing all its weights"
+  relevant:
+    - {source: lora, index: 1}
+    - {source: lora, index: 2}
+  ground_truth: >
+    By freezing the pretrained weights and injecting trainable low-rank
+    decomposition matrices, which drastically reduces the number of trainable
+    parameters while keeping the original weights unchanged.
+
+- id: positional_encoding_formula
+  query: "what function is used for positional encoding"
+  relevant:
+    - {source: attention, index: 18}
+  ground_truth: >
+    Positional encodings use sine and cosine functions of different frequencies.
+
+- id: big_model_params
+  query: "how many parameters does the big Transformer model have"
+  relevant:
+    - {source: attention, index: 30}
+  ground_truth: "The big Transformer model has 213 million parameters."
+
+- id: why_lora_no_latency
+  query: "does LoRA add inference latency"
+  relevant:
+    - {source: lora, index: 17}
+    - {source: lora, index: 14}
+  ground_truth: >
+    No. LoRA introduces no additional inference latency because the low-rank
+    matrices can be merged into the frozen pretrained weights at deployment time.
+
+- id: bert_vs_gpt_directionality
+  query: "how does BERT differ from left-to-right language models"
+  relevant:
+    - {source: bert, index: 18}
+    - {source: bert, index: 15}
+  ground_truth: >
+    BERT is deeply bidirectional: unlike left-to-right language models, it
+    conditions on both left and right context in all layers by using a masked
+    language modelling objective.
+
+- id: bert_masking_percentage
+  query: "what percentage of tokens is masked during BERT pretraining"
+  relevant:
+    - {source: bert, index: 14}
+  ground_truth: >
+    15% of the input tokens are masked at random during BERT pretraining.
+
+- id: multihead_why
+  query: "why use multiple attention heads instead of one"
+  relevant:
+    - {source: attention, index: 15}
+  ground_truth: >
+    Multiple heads allow the model to jointly attend to information from
+    different representation subspaces at different positions, which a single
+    attention head prevents by averaging.
